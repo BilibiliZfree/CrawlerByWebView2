@@ -1,0 +1,125 @@
+﻿<Page x:Class="Crawler.Views.GetPicture"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Crawler.Views"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="GetPictrue">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <!--提示信息-->
+            <RowDefinition Height="25"/>
+        </Grid.RowDefinitions>
+        <!--标签页-->
+        <Grid Background="Transparent">
+            <!--#region 筛选img标签图片-->
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <!--网址&开始获取图像-->
+                        <RowDefinition Height="36"/>
+                        <!--筛选 数据显示-->
+                        <RowDefinition/>
+                        <!--抓取、解析设置-->
+                        <RowDefinition Height="auto"/>
+                        <!--下载目录、开始下载-->
+                        <RowDefinition Height="60"/>
+                    </Grid.RowDefinitions>
+                    <!--网址&开始获取图像-->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <!--标题-->
+                        <Label Content="&#xe637;" Style="{DynamicResource IconLabelStyle}"
+                               FontSize="24"/>
+                        <Label Grid.Column="1" Content="url" FontSize="24"/>
+                        <TextBox Grid.Column="2" x:Name="urlTextBox" Style="{DynamicResource underLineStyle}"/>
+                        <Button Grid.Column="3" x:Name="HtmlParser_Button" Style="{DynamicResource NormalButtonStyle}"
+                                Content="  解析网页  " Click="HtmlParser_Button_Click"/>
+                    </Grid>
+                    <!--筛选 数据显示-->
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="250"/>
+                        </Grid.ColumnDefinitions>
+
+                        <ListView x:Name="downloadImageMessage_ListView" SelectionChanged="DownloadImageMessage_ListView_SelectionChanged"
+                                  Style="{DynamicResource ListViewStyle}" ItemContainerStyle="{DynamicResource ListViewItemContainerStyle}">
+                            <ListView.View>
+                                <GridView ColumnHeaderContainerStyle="{DynamicResource GridViewColumnHeaderStyle}">
+                                    <GridViewColumn Header="ID" Width="30" DisplayMemberBinding="{Binding Id}"/>
+                                    <GridViewColumn Header="链接" Width="200" DisplayMemberBinding="{Binding Url}"/>
+                                    <GridViewColumn Header="标题" Width="200" DisplayMemberBinding="{Binding Title}"/>
+                                    <GridViewColumn Header="状态" Width="50" DisplayMemberBinding="{Binding Status}"/>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                        <StackPanel Grid.Column="1">
+                            <Image Height="166.6" x:Name="ImageShow" Stretch="Uniform"/>
+                            <Label Height="30" Name="ImageId"/>
+                            <Label Height="30" Name="ImageUrl"/>
+                        </StackPanel>
+                    </Grid>
+                    <!--抓取、解析设置-->
+                    <Grid Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <!--抓取设置-->
+                        <GroupBox Header="抓取设置">
+                            <DockPanel>
+                                <CheckBox Content="使用HttpWebRequest" x:Name="HttpWebRequest_CheckBox"
+                                          VerticalAlignment="Center" VerticalContentAlignment="Center"
+                                          Margin="5" Click="CheckBox_CLick"/>
+                                <CheckBox Content="使用CEF" x:Name="CEF_CheckBox" IsChecked="True"
+                                          VerticalAlignment="Center" VerticalContentAlignment="Center"
+                                          Margin="5" Click="CheckBox_CLick"/>
+                            </DockPanel>
+                        </GroupBox>
+                        <!--解析设置-->
+                        <GroupBox Grid.Column="1" Header="解析设置">
+                            <DockPanel>
+                                <CheckBox Content="使用HtmlAgilityPack解析" x:Name="HtmlAgilityPack_CheckBox" IsChecked="True"
+                                          VerticalAlignment="Center" VerticalContentAlignment="Center"
+                                          Margin="5" Click="CheckBox_CLick"/>
+                                <CheckBox Content="使用正则解析" x:Name="Regex_CheckBox"
+                                          VerticalAlignment="Center" VerticalContentAlignment="Center"
+                                          Margin="5" Click="CheckBox_CLick"/>
+                            </DockPanel>
+                        </GroupBox>
+                    </Grid>
+                    <GroupBox Header="图片下载" Grid.Row="3">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Content="&#xe636;" FontSize="32" Style="{DynamicResource IconLabelStyle}"/>
+                            <TextBox Grid.Column="1" x:Name="PathTextBox" Style="{DynamicResource underLineStyle}" IsReadOnly="True"/>
+                            <CheckBox Grid.Column="2" x:Name="DownloadPathDefault_CheckBox" Click="DefaultDownloadPath_CheckBox_Click"
+                                      Content="默认" VerticalAlignment="Center"/>
+                            <Button Grid.Column="3" Style="{DynamicResource NormalButtonStyle}"
+                                    Content=" 选择下载目录 " Click="SelectPathButton_Click"/>
+                            <Button Grid.Column="4" Style="{DynamicResource NormalButtonStyle}"
+                                    Content=" 开始下载 " />
+                        </Grid>
+                    </GroupBox>
+                </Grid>
+                <!--#endregion-->
+        </Grid>
+        <!--提示信息-->
+        <Label Grid.Row="2" x:Name="MessageLabel" Foreground="Firebrick"/>
+    </Grid>
+</Page>

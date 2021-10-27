@@ -1,0 +1,73 @@
+﻿<Window x:Class="Crawler.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Crawler"
+        mc:Ignorable="d"
+        Title="主窗口" Height="450" Width="800" Icon="Resources\ico\crawler.ico"
+        WindowStartupLocation="CenterScreen" WindowStyle="None"
+        Background="Transparent" AllowsTransparency="True">
+    <Border Style="{DynamicResource BorderStyle}" MouseLeftButtonDown="Border_MouseLeftButtonDown">
+        <Grid>
+            <Grid.RowDefinitions>
+                <!--头-->
+                <RowDefinition Height="auto"/>
+                <RowDefinition/>
+                <!--版本信息、提示信息-->
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Border Grid.Row="0" Style="{DynamicResource HeaderBorderStyle}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="1"
+                        Content="&#xe65d;" FontFamily="Resources\Iconfont\#iconfont"
+                        Style="{DynamicResource HeadButtonStyle}" Click="MiniButton_Click"/>
+                    <Button Grid.Column="2" x:Name="_Maximize"
+                        Content="&#xe659;" FontFamily="Resources\Iconfont\#iconfont"
+                        Style="{DynamicResource HeadButtonStyle}" Click="MaximizeButton_Click"/>
+                    <Button Grid.Column="3"
+                        Content="&#xe613;" FontFamily="Resources\Iconfont\#iconfont"
+                        Style="{DynamicResource HeadButtonStyle}" Click="CloseButton_Click"/>
+                </Grid>
+            </Border>
+
+            <Border Grid.Row="1">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="202"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Hidden">
+                        <WrapPanel>
+                            <ToggleButton x:Name="_GetPictures" Content="爬取网页图片" Style="{DynamicResource WrapButtonStyle}"  Click="GetPictures_Click" Checked="ToggleButton_Checked"/>
+                            <ToggleButton x:Name="_GetVideos" Content="爬取网页视频" Style="{DynamicResource WrapButtonStyle}" Checked="ToggleButton_Checked"/>
+                        </WrapPanel>
+                    </ScrollViewer>
+
+                    <Frame Grid.Column="1" x:Name="_Frame" NavigationUIVisibility="Hidden" Margin="1"/>
+                </Grid>
+            </Border>
+            
+            <Border Grid.Row="2">
+                <Grid Margin="0 1">
+                    <Grid.ColumnDefinitions>
+                        <!--版本信息-->
+                        <ColumnDefinition Width="auto"/>
+                        <!--提示信息-->
+                        <ColumnDefinition/>
+                        <!--公告-->
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" x:Name="_Version" Content="版本号:1.0.0.0" Style="{DynamicResource NormalLabelStyle}"/>
+                    <Label Grid.Column="1" x:Name="_Notice" Content="第一条信息" Style="{DynamicResource NormalLabelStyle}" HorizontalAlignment="Center"/>
+                </Grid>
+            </Border>
+        </Grid>
+    </Border>
+</Window>

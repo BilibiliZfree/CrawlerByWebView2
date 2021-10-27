@@ -1,0 +1,19 @@
+﻿<Application x:Class="Crawler.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Crawler"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ResourceDictionarys\BorderDictionary.xaml"/>
+                <ResourceDictionary Source="ResourceDictionarys\ButtonDictionary.xaml"/>
+                <ResourceDictionary Source="ResourceDictionarys\CheckBoxDictionary.xaml"/>
+                <ResourceDictionary Source="ResourceDictionarys\ColorBrushDictionary.xaml"/>
+                <ResourceDictionary Source="ResourceDictionarys\LabelDictionary.xaml"/>
+                <ResourceDictionary Source="ResourceDictionarys\ListViewDictionary.xaml"/>
+                <ResourceDictionary Source="ResourceDictionarys\TextBoxDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
