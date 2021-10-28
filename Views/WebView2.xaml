@@ -1,0 +1,20 @@
+﻿<Window x:Class="Crawler.Views.WebView2"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Crawler.Views" xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
+        mc:Ignorable="d"
+        Title="WebView2" Height="450" Width="1200">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="800*"/>
+            <ColumnDefinition Width="400*"/>
+        </Grid.ColumnDefinitions>
+        <DockPanel Grid.Column="0">
+            <wv2:WebView2 Name="webView" NavigationCompleted="webView_NavigationCompleted"/>
+        </DockPanel>
+        <TextBox Grid.Column="1" x:Name="HtmlSource" Margin="5" AcceptsReturn="True"/>
+    </Grid>
+    
+</Window>

@@ -27,7 +27,7 @@ namespace Crawler
 
         //static readonly double screenWidth = SystemParameters.PrimaryScreenWidth;
 
-        readonly GetPicture getPicture = new GetPicture();
+        GetPicture getPicture = new GetPicture();
 
         // ToggleButton定义
         ToggleButton toggleButton = null;
@@ -98,7 +98,7 @@ namespace Crawler
         /// <param name="e"></param>
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
-            getPicture.GlobalDataClose();
+            
             Close();
         }
 
