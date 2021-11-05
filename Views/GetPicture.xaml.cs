@@ -21,9 +21,13 @@ namespace Crawler.Views
     /// </summary>
     public partial class GetPicture : Page
     {
+        WebView2 webView = new WebView2();
+
+        private WebView2Struct _WebViewStruct = new WebView2Struct() { Result = new Dictionary<int, string>() };
         public GetPicture()
         {
             InitializeComponent();
+            webView.Show();
         }
 
         /// <summary>
@@ -33,11 +37,8 @@ namespace Crawler.Views
         /// <param name="e"></param>
         private void LoadButton_Click(object sender, RoutedEventArgs e)
         {
-            WebView2Struct @struct = new WebView2Struct();
-            @struct.Source = new Uri(_UrlTextBox.Text);
-            WebView2 webView = new WebView2();
-            webView.webView.Source = @struct.Source;
-            webView.ShowDialog();
+            webView.webView.Source = new Uri(_UrlTextBox.Text);
+            _WebViewStruct = webView._webView2Struct;
         }
     }
 }

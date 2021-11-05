@@ -49,6 +49,23 @@ namespace Crawler.Model
             set { _IsInDesignMode = value; }
         }
 
+        private bool _IsWork;
+
+        public bool IsWork
+        {
+            get { return _IsWork; }
+            set { _IsWork = value; }
+        }
+
+        private Dictionary<int,string> _Result;
+
+        public Dictionary<int,string> Result
+        {
+            get { return _Result; }
+            set { _Result = value; }
+        }
+
+
         private Uri _Source;
 
         public Uri Source

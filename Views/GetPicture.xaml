@@ -27,7 +27,7 @@
             <Label Grid.Column="0" Style="{DynamicResource IconLabelStyle}"
                    Content="&#xe637;"/>
             <!--URL链接输入-->
-            <TextBox Grid.Column="1" Style="{DynamicResource underLineStyle}"
+            <TextBox Grid.Column="1" Style="{DynamicResource underLineStyle}" Text="https://www.bilibili.com/"
                      x:Name="_UrlTextBox"/>
             <Button Grid.Column="2" Style="{DynamicResource NormalButtonStyle}"
                     Content="&#xe7f1;"  FontSize="25" FontFamily="\Resources\Iconfont\#iconfont" Width="40"
@@ -55,7 +55,7 @@
                     <RowDefinition Height="265*"/>
                 </Grid.RowDefinitions>
                 <Border Grid.Row="0" CornerRadius="5" Margin="5">
-                    <Image Source="https://img.crawler.qq.com/lolwebschool/0/JAutoCMS_LOLWeb_3f9fe26fac0da9c15e6a7f765dab5634/0"
+                    <Image x:Name="_ShowImage" Source="https://img.crawler.qq.com/lolwebschool/0/JAutoCMS_LOLWeb_3f9fe26fac0da9c15e6a7f765dab5634/0"
                        Stretch="Uniform"/>
                 </Border>
                 <Border Grid.Row="1">
