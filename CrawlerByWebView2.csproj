@@ -28,8 +28,8 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <UpdateUrl>\\LAPTOP-T9QO6L3F\Users\98546\source\publish\</UpdateUrl>
-    <ApplicationRevision>52</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationVersion>1.0.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -101,7 +101,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\UrlStruct.cs" />
     <Compile Include="Model\WebView2Struct.cs" />
+    <Compile Include="Util\RegexPattern.cs" />
+    <Compile Include="Util\RegexUtil.cs" />
     <Compile Include="Views\GetPicture.xaml.cs">
       <DependentUpon>GetPicture.xaml</DependentUpon>
     </Compile>

@@ -32,6 +32,7 @@ namespace Crawler.Views
 
         private async void WebView_NavigationCompleted(object sender, CoreWebView2NavigationCompletedEventArgs e)
         {
+            _webView2Struct.Result.Clear();
             HtmlSource.Text = "";
             object i = await webView.CoreWebView2.ExecuteScriptAsync("document.getElementsByTagName('img').length");
             int total = int.Parse(i.ToString());
@@ -40,11 +41,12 @@ namespace Crawler.Views
                 //获取图片链接
                 object o = await webView.CoreWebView2.ExecuteScriptAsync($"document.getElementsByTagName(\'img\').item({num}).src");
                 HtmlSource.Text += o.ToString().Replace("\"","") + "\n";
-                if (_webView2Struct.Result.ContainsKey(num))
-                {
-                    _webView2Struct.Result.Remove(num);
-                    _webView2Struct.Result.Add(num, o.ToString().Replace("\"", ""));
-                }
+                _webView2Struct.Result.Add(num, o.ToString().Replace("\"", ""));
+                //if (_webView2Struct.Result.ContainsKey(num))
+                //{
+                //    _webView2Struct.Result.Remove(num);
+                //    _webView2Struct.Result.Add(num, o.ToString().Replace("\"", ""));
+                //}
 
             }
             
