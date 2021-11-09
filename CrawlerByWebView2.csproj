@@ -178,7 +178,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="Crawler_TemporaryKey.pfx" />
+    <None Include="CrawlerByWebview2_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="packages.xsd">
       <SubType>Designer</SubType>
