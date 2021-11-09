@@ -24,6 +24,15 @@ namespace Crawler.Views
     /// </summary>
     public partial class GetPicture : Page
     {
+        const string settingFileName = "Setting.init";
+        const string downloadPath = "downloadPath";
+        const string Url = "Url";
+        const string DefaultUrl = "https://www.bilibili.com/";
+        const string defaultDownloadDirectory = "Pictures";
+
+        //用于在Setting.init文件中分隔名称和值的字符。
+        const char SettingDivider = '$';
+
         WebView2 webView = new WebView2();
 
         //锁对象
@@ -34,6 +43,7 @@ namespace Crawler.Views
         {
             InitializeComponent();
             webView.Show();
+
 
             //控件资源绑定
             ImageMessage_ListView.ItemsSource = imageCollection;
@@ -63,7 +73,10 @@ namespace Crawler.Views
                 AddToCollection(new UrlStruct() { Id = item.Key, IamgeName = "", Link = item.Value, Status = "已获取" });
             }
         }
-
+        /// <summary>
+        /// 将链接数据添加到列表源里面
+        /// </summary>
+        /// <param name="urlStruct"></param>
         public void AddToCollection(UrlStruct urlStruct)
         {
             //线程锁，防止多线程同时操作List数据导致数据异常
@@ -109,8 +122,10 @@ namespace Crawler.Views
             {
                 try
                 {
-                    string imgURL = imageCollection[index].Link;
-                    _ShowImage.Source = new BitmapImage(new Uri(imgURL));
+                    _ShowImage.Source = new BitmapImage(new Uri(imageCollection[index].Link));
+                    PictrueNameLabel.Content = imageCollection[index].IamgeName;
+                    PictrueIDLabel.Content = imageCollection[index].Id;
+                    PictrueLinkLabel.Content = imageCollection[index].Link;
                 }
                 catch (Exception)
                 {
@@ -137,9 +152,13 @@ namespace Crawler.Views
             try
             {
                 Network network = new Network();
+                string destinationFileName = $"{ PathTextBox.Text}{Path.DirectorySeparatorChar}{urlStruct.IamgeName}";
                 if (RegexUtil.IsInvalidImgUrl(urlStruct.Link))
                 {
-                    network.DownloadFile(urlStruct.Link, $"{ PathTextBox.Text}{Path.DirectorySeparatorChar}{urlStruct.IamgeName}");
+                    if (CoverExistaFile.IsChecked == true)
+                        if (File.Exists(destinationFileName))
+                            File.Delete(destinationFileName);
+                    network.DownloadFile(urlStruct.Link, destinationFileName);
                 }
             }
             catch (Exception ex) 
@@ -148,7 +167,7 @@ namespace Crawler.Views
             }
             finally
             {
-                ShowStatusText("下载完成！");
+                MessageBox.Show("下载完成！");
             }
         }
 
@@ -165,9 +184,12 @@ namespace Crawler.Views
                     Network network = new Network();
                     foreach (var url in urls)
                     {
+                        string destinationFileName = $"{ PathTextBox.Text}{Path.DirectorySeparatorChar}{url.IamgeName}";
                         if (RegexUtil.IsInvalidImgUrl(url.Link))
                         {
-                            network.DownloadFile(url.Link, $"{ PathTextBox.Text}{Path.DirectorySeparatorChar}{url.IamgeName}");
+                            if (File.Exists(destinationFileName))
+                                File.Delete(destinationFileName);
+                            network.DownloadFile(url.Link, destinationFileName);
                             ShowStatusText($"图片下载进度：{url.Id}/{urls.Count}");
                         }
                     }
@@ -179,11 +201,10 @@ namespace Crawler.Views
             }
             finally
             {
-                ShowStatusText("下载完成！");
+                MessageBox.Show("下载完成！");
             }
 
         }
-
 
         /// <summary>
         /// 选择图片保存的路径
@@ -199,10 +220,110 @@ namespace Crawler.Views
             if (result == System.Windows.Forms.DialogResult.OK)
             {
                 PathTextBox.Text = folderBrowserDialog.SelectedPath;
-                DownloadPathDefault_CheckBox.IsChecked = false;
+                DefaultDownloadPath_CheckBox.IsChecked = false;
                 ShowStatusText("新目录已获取.");
             }
         }
+
+        #region 设置文件读取
+        /// <summary>
+        /// 追加下载路径属性
+        /// </summary>
+        private void AppendDownloadPath()
+        {
+            var currentDirectory = Directory.GetCurrentDirectory();
+            string[] downloadCurrentPath = { $"{downloadPath}{SettingDivider}{currentDirectory}{Path.DirectorySeparatorChar}{defaultDownloadDirectory}" };
+            File.AppendAllLines(settingFileName, downloadCurrentPath);
+            ShowStatusText("下载路径属性已追加.");
+        }
+
+        /// <summary>
+        /// 追加下载路径属性
+        /// </summary>
+        private void AppendUrl()
+        {
+            var Link = _UrlTextBox.Text;
+            string[] Links = { $"{Url}{SettingDivider}{DefaultUrl}" };
+            if (RegexUtil.IsUrl(Link)) 
+                Links[0] = $"{Url}{SettingDivider}{Link}";
+            File.AppendAllLines(settingFileName, Links);
+            ShowStatusText("链接属性已追加.");
+
+        }
+
+        /// <summary>
+        /// 读取Setting.init文件中的属性
+        /// </summary>
+        private string ReadAttribute(string attribute)
+        {
+            string line = null;
+            string[] part;
+            bool noResult = true;
+            string result = null;
+            //获取图片保存目录
+            if (attribute == "downloadPath")
+            {
+                using (var sr = new StreamReader(settingFileName))
+                {
+                    //获取图片下载地址
+                    while ((line = sr.ReadLine()) != null)
+                    {
+                        //将行拆分为分隔符(名称)之前的部分和分隔符之后的部分(值)并组合成字符数组。
+                        part = line.Split(SettingDivider);
+                        //获取图片下载地址
+                        switch (part[0])
+                        {
+                            case downloadPath:
+                                result = part[1];
+                                noResult = false;
+                                break;
+                            default:
+                                break;
+                        }
+
+                    }
+                }
+                //如果在设置文件里找不到路径属性
+                if (noResult)
+                {
+                    AppendDownloadPath();
+                    result = ReadAttribute(attribute);
+                }
+            }
+            //获取链接地址
+            if (attribute == "DefaultUrl")
+            {
+                using (var sr = new StreamReader(settingFileName))
+                {
+                    //获取图片下载地址
+                    while ((line = sr.ReadLine()) != null)
+                    {
+                        //将行拆分为分隔符(名称)之前的部分和分隔符之后的部分(值)并组合成字符数组。
+                        part = line.Split(SettingDivider);
+                        //获取图片下载地址
+                        switch (part[0])
+                        {
+                            case Url:
+                                result = part[1];
+                                noResult = false;
+                                break;
+                            default:
+                                break;
+                        }
+
+                    }
+                }
+                //如果在设置文件里找不到路径属性
+                if (noResult)
+                {
+                    AppendDownloadPath();
+                    result = ReadAttribute(attribute);
+                }
+            }
+            return result;
+        }
+        #endregion
+
 
         #region 公共
         public void ShowStatusText(string content)

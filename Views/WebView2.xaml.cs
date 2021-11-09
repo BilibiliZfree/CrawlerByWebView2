@@ -34,6 +34,7 @@ namespace Crawler.Views
         {
             _webView2Struct.Result.Clear();
             HtmlSource.Text = "";
+            //普通的img标签
             object i = await webView.CoreWebView2.ExecuteScriptAsync("document.getElementsByTagName('img').length");
             int total = int.Parse(i.ToString());
             for (int num = 1; num < total; num++)
@@ -42,11 +43,7 @@ namespace Crawler.Views
                 object o = await webView.CoreWebView2.ExecuteScriptAsync($"document.getElementsByTagName(\'img\').item({num}).src");
                 HtmlSource.Text += o.ToString().Replace("\"","") + "\n";
                 _webView2Struct.Result.Add(num, o.ToString().Replace("\"", ""));
-                //if (_webView2Struct.Result.ContainsKey(num))
-                //{
-                //    _webView2Struct.Result.Remove(num);
-                //    _webView2Struct.Result.Add(num, o.ToString().Replace("\"", ""));
-                //}
+                
 
             }
             

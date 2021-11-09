@@ -28,7 +28,7 @@
             <Label Grid.Column="0" Style="{DynamicResource IconLabelStyle}"
                    Content="&#xe637;"/>
             <!--URL链接输入-->
-            <TextBox Grid.Column="1" Style="{DynamicResource underLineStyle}" Text="https://www.bilibili.com/"
+            <TextBox Grid.Column="1" Style="{DynamicResource underLineStyle}" Text="https://lol.qq.com/tft/#/index"
                      x:Name="_UrlTextBox"/>
             <Button Grid.Column="2" Style="{DynamicResource NormalButtonStyle}"
                     Content="&#xe7f1;"  FontSize="25" FontFamily="\Resources\Iconfont\#iconfont" Width="40"
@@ -64,26 +64,51 @@
                     <RowDefinition Height="265*"/>
                 </Grid.RowDefinitions>
                 <Border Grid.Row="0" CornerRadius="5" Margin="5">
-                    <Image x:Name="_ShowImage" Source="https://img.crawler.qq.com/lolwebschool/0/JAutoCMS_LOLWeb_3f9fe26fac0da9c15e6a7f765dab5634/0"
-                       Stretch="Uniform"/>
+                    <Image x:Name="_ShowImage" Stretch="Uniform"/>
                 </Border>
                 <Border Grid.Row="1">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition/>
                             <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
                         </Grid.RowDefinitions>
-                        <Button Grid.Row="0" Content="图片信息" Style="{DynamicResource NormalButtonStyle}"/>
-                        <Button Grid.Row="1" Content="下载设置" Style="{DynamicResource NormalButtonStyle}"/>
-                        <Button Grid.Row="2" Content="下载选中图片" Style="{DynamicResource NormalButtonStyle}"
+                        <Grid Grid.Row="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="3*"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Row="0" Grid.Column="0" Content="文件名：" Style="{DynamicResource NormalLabelStyle}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <Label Grid.Row="0" Grid.Column="1" x:Name="PictrueNameLabel" Style="{DynamicResource NormalLabelStyle}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <Label Grid.Row="1" Grid.Column="0" Content="图片ID：" Style="{DynamicResource NormalLabelStyle}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <Label Grid.Row="1" Grid.Column="1" x:Name="PictrueIDLabel" Style="{DynamicResource NormalLabelStyle}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <Label Grid.Row="2" Grid.Column="0" Content="链接地址：" Style="{DynamicResource NormalLabelStyle}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <Label Grid.Row="2" Grid.Column="1" x:Name="PictrueLinkLabel" Style="{DynamicResource NormalLabelStyle}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        </Grid>
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+
+                            </Grid.RowDefinitions>
+                            
+                            <Button Grid.Row="0" Content="下载选中图片" Style="{DynamicResource NormalButtonStyle}"
                                 x:Name="DownloadOne" Click="DownloadOne_Click"/>
-                        <Button Grid.Row="3" Content="下载全部图片" Style="{DynamicResource NormalButtonStyle}"
+                            <Button Grid.Row="0" Grid.Column="1" Content="下载全部图片" Style="{DynamicResource NormalButtonStyle}"
                                 x:Name="DownloadAll" Click="DownloadAll_Click"/>
-                        <CheckBox Grid.Row="4" Content="隐藏浏览器" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            <Button Grid.Row="1" Content="下载设置" Style="{DynamicResource NormalButtonStyle}"/>
+                            <CheckBox Grid.Row="1" Grid.Column="1" x:Name="CoverExistaFile" Content="覆盖已存在文件" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Grid>
                     </Grid>
+                   
                 </Border>
             </Grid>
         </Grid>
@@ -99,7 +124,7 @@
             <TextBox Grid.Column="1" IsReadOnly="True" Style="{DynamicResource underLineStyle}"
                      x:Name="PathTextBox" Text="C:\Users\98546\Pictures\Saved Pictures"/>
             <CheckBox Grid.Column="2" Content="默认" VerticalAlignment="Center" IsChecked="True"
-                      x:Name="DownloadPathDefault_CheckBox"/>
+                      x:Name="DefaultDownloadPath_CheckBox"/>
             <Button Grid.Column="3" Content="选择下载目录" Style="{DynamicResource NormalButtonStyle}"
                     Click="SelectPathButton_Click"/>
         </Grid>
