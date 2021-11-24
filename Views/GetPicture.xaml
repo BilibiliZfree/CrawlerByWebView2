@@ -28,7 +28,7 @@
             <Label Grid.Column="0" Style="{DynamicResource IconLabelStyle}"
                    Content="&#xe637;"/>
             <!--URL链接输入-->
-            <TextBox Grid.Column="1" Style="{DynamicResource underLineStyle}" Text="https://lol.qq.com/tft/#/index"
+            <TextBox Grid.Column="1" Style="{DynamicResource underLineStyle}"
                      x:Name="_UrlTextBox"/>
             <Button Grid.Column="2" Style="{DynamicResource NormalButtonStyle}"
                     Content="&#xe7f1;"  FontSize="25" FontFamily="\Resources\Iconfont\#iconfont" Width="40"
@@ -124,7 +124,7 @@
             <TextBox Grid.Column="1" IsReadOnly="True" Style="{DynamicResource underLineStyle}"
                      x:Name="PathTextBox" Text="C:\Users\98546\Pictures\Saved Pictures"/>
             <CheckBox Grid.Column="2" Content="默认" VerticalAlignment="Center" IsChecked="True"
-                      x:Name="DefaultDownloadPath_CheckBox"/>
+                      x:Name="DefaultDownloadPath_CheckBox" Click="DefaultDownloadPath_CheckBox_Click"/>
             <Button Grid.Column="3" Content="选择下载目录" Style="{DynamicResource NormalButtonStyle}"
                     Click="SelectPathButton_Click"/>
         </Grid>

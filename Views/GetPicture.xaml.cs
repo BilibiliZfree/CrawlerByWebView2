@@ -43,7 +43,7 @@ namespace Crawler.Views
         {
             InitializeComponent();
             webView.Show();
-
+            ReadAttributes();
 
             //控件资源绑定
             ImageMessage_ListView.ItemsSource = imageCollection;
@@ -206,6 +206,26 @@ namespace Crawler.Views
 
         }
 
+        private void DefaultDownloadPath_CheckBox_Click(object sender, RoutedEventArgs e)
+        {
+            if (DefaultDownloadPath_CheckBox.IsChecked == false)
+            {
+                DefaultDownloadPath_CheckBox.IsChecked = true;
+                ShowStatusText("更改目录请点击[选择下载目录]按钮.");
+            }
+            else
+            {
+                DefaultDownloadPath_CheckBox.IsChecked = true;
+                var downloadCurrentPath = $"{downloadPath}{SettingDivider}{PathTextBox.Text}";
+                //File.WriteAllText(settingFileName, downloadCurrentPath);
+                if (ChangeDefaultDownloadPath(downloadCurrentPath))
+                {
+                    ShowStatusText("已将下载目录更改为当前地址");
+                }
+
+            }
+        }
+
         /// <summary>
         /// 选择图片保存的路径
         /// </summary>
@@ -231,23 +251,70 @@ namespace Crawler.Views
         /// </summary>
         private void AppendDownloadPath()
         {
-            var currentDirectory = Directory.GetCurrentDirectory();
-            string[] downloadCurrentPath = { $"{downloadPath}{SettingDivider}{currentDirectory}{Path.DirectorySeparatorChar}{defaultDownloadDirectory}" };
-            File.AppendAllLines(settingFileName, downloadCurrentPath);
-            ShowStatusText("下载路径属性已追加.");
+            if(File.Exists(settingFileName))
+            {
+                var currentDirectory = Directory.GetCurrentDirectory();
+                string[] downloadCurrentPath = { $"{downloadPath}{SettingDivider}{currentDirectory}{Path.DirectorySeparatorChar}{defaultDownloadDirectory}" };
+                File.AppendAllLines(settingFileName, downloadCurrentPath);
+                ShowStatusText("下载路径属性已追加.");
+            }
+            else
+            {
+                File.Create(settingFileName);
+                AppendDownloadPath();
+            }
         }
+
+        private bool ChangeDefaultDownloadPath(string CurrentPath)
+        {
+            string line = null;
+            List<string> part = new List<string>();
+            bool noPath = true;
+            var sr = new StreamReader(settingFileName);
+            using (sr)
+            {
+                while ((line = sr.ReadLine()) != null)
+                {
+                    if (line.StartsWith("downloadPath$"))
+                    {
+                        line = $"{CurrentPath}";
+                        noPath = false;
+                    }
+                    part.Add(line);
+                }
+
+            }
+            sr.Close();
+            File.WriteAllLines(settingFileName, part);
+            if (noPath)
+            {
+                AppendDownloadPath();
+                PathTextBox.Text = ReadAttribute("downloadPath");
+                noPath = false;
+            }
+            return !noPath;
+        }
+
 
         /// <summary>
         /// 追加下载路径属性
         /// </summary>
         private void AppendUrl()
         {
-            var Link = _UrlTextBox.Text;
-            string[] Links = { $"{Url}{SettingDivider}{DefaultUrl}" };
-            if (RegexUtil.IsUrl(Link)) 
-                Links[0] = $"{Url}{SettingDivider}{Link}";
-            File.AppendAllLines(settingFileName, Links);
-            ShowStatusText("链接属性已追加.");
+            if (File.Exists(settingFileName))
+            {
+                var Link = _UrlTextBox.Text;
+                string[] Links = { $"{Url}{SettingDivider}{DefaultUrl}" };
+                if (RegexUtil.IsUrl(Link)) 
+                    Links[0] = $"{Url}{SettingDivider}{Link}";
+                File.AppendAllLines(settingFileName, Links);
+                ShowStatusText("链接属性已追加.");
+            }
+            else
+            {
+                File.Create(settingFileName);
+                AppendDownloadPath();
+            }
 
         }
 
@@ -260,68 +327,86 @@ namespace Crawler.Views
             string[] part;
             bool noResult = true;
             string result = null;
-            //获取图片保存目录
-            if (attribute == "downloadPath")
+            if (string.IsNullOrEmpty(attribute)) { ShowStatusText("输入属性不能为空");  return null; }
+            if (File.Exists(settingFileName)) 
             {
-                using (var sr = new StreamReader(settingFileName))
+                //获取图片保存目录
+                if (attribute == "downloadPath")
                 {
-                    //获取图片下载地址
-                    while ((line = sr.ReadLine()) != null)
+                    using (var sr = new StreamReader(settingFileName))
                     {
-                        //将行拆分为分隔符(名称)之前的部分和分隔符之后的部分(值)并组合成字符数组。
-                        part = line.Split(SettingDivider);
                         //获取图片下载地址
-                        switch (part[0])
+                        while ((line = sr.ReadLine()) != null)
                         {
-                            case downloadPath:
-                                result = part[1];
-                                noResult = false;
-                                break;
-                            default:
-                                break;
-                        }
+                            //将行拆分为分隔符(名称)之前的部分和分隔符之后的部分(值)并组合成字符数组。
+                            part = line.Split(SettingDivider);
+                            //获取图片下载地址
+                            switch (part[0])
+                            {
+                                case downloadPath:
+                                    result = part[1];
+                                    noResult = false;
+                                    break;
+                                default:
+                                    break;
+                            }
 
+                        }
+                    }
+                    //如果在设置文件里找不到路径属性
+                    if (noResult)
+                    {
+                        AppendDownloadPath();
+                        result = ReadAttribute(attribute);
                     }
                 }
-                //如果在设置文件里找不到路径属性
-                if (noResult)
+
+                //获取链接地址
+                else if (attribute == "DefaultUrl")
                 {
-                    AppendDownloadPath();
-                    result = ReadAttribute(attribute);
+                    using (var sr = new StreamReader(settingFileName))
+                    {
+                        //获取图片下载地址
+                        while ((line = sr.ReadLine()) != null)
+                        {
+                            //将行拆分为分隔符(名称)之前的部分和分隔符之后的部分(值)并组合成字符数组。
+                            part = line.Split(SettingDivider);
+                            //获取图片下载地址
+                            switch (part[0])
+                            {
+                                case Url:
+                                    result = part[1];
+                                    noResult = false;
+                                    break;
+                                default:
+                                    break;
+                            }
+
+                        }
+                    }
+                    //如果在设置文件里找不到路径属性
+                    if (noResult)
+                    {
+                        AppendUrl();
+                        result = ReadAttribute(attribute);
+                    }
                 }
             }
-            //获取链接地址
-            if (attribute == "DefaultUrl")
+            else
             {
-                using (var sr = new StreamReader(settingFileName))
-                {
-                    //获取图片下载地址
-                    while ((line = sr.ReadLine()) != null)
-                    {
-                        //将行拆分为分隔符(名称)之前的部分和分隔符之后的部分(值)并组合成字符数组。
-                        part = line.Split(SettingDivider);
-                        //获取图片下载地址
-                        switch (part[0])
-                        {
-                            case Url:
-                                result = part[1];
-                                noResult = false;
-                                break;
-                            default:
-                                break;
-                        }
-
-                    }
-                }
-                //如果在设置文件里找不到路径属性
-                if (noResult)
-                {
-                    AppendDownloadPath();
-                    result = ReadAttribute(attribute);
-                }
+                File.Create(settingFileName);
+                result = ReadAttribute(attribute);
             }
             return result;
         }
+
+        public void ReadAttributes()
+        {
+            PathTextBox.Text = ReadAttribute("downloadPath");
+            _UrlTextBox.Text = ReadAttribute("DefaultUrl");
+        }
+
+
         #endregion
 
 
@@ -333,5 +418,7 @@ namespace Crawler.Views
             });
         }
         #endregion
+
+        
     }
 }
