@@ -104,7 +104,8 @@
                                 x:Name="DownloadOne" Click="DownloadOne_Click"/>
                             <Button Grid.Row="0" Grid.Column="1" Content="下载全部图片" Style="{DynamicResource NormalButtonStyle}"
                                 x:Name="DownloadAll" Click="DownloadAll_Click"/>
-                            <Button Grid.Row="1" Content="下载设置" Style="{DynamicResource NormalButtonStyle}"/>
+                            <Button Grid.Row="1" Content="自定义JavaScript" Style="{DynamicResource NormalButtonStyle}"
+                                    x:Name="JavascriptSetting" Click="JavascriptSetting_Click" />
                             <CheckBox Grid.Row="1" Grid.Column="1" x:Name="CoverExistaFile" Content="覆盖已存在文件" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         </Grid>
                     </Grid>

@@ -102,12 +102,16 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="GenericParadigm\GenericParadigm.cs" />
+    <Compile Include="Model\JSCodeStruct.cs" />
     <Compile Include="Model\UrlStruct.cs" />
     <Compile Include="Model\WebView2Struct.cs" />
     <Compile Include="Util\RegexPattern.cs" />
     <Compile Include="Util\RegexUtil.cs" />
     <Compile Include="Views\GetPicture.xaml.cs">
       <DependentUpon>GetPicture.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\JavascriptSettings.xaml.cs">
+      <DependentUpon>JavascriptSettings.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\WebView2.xaml.cs">
       <DependentUpon>WebView2.xaml</DependentUpon>
@@ -153,6 +157,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\GetPicture.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\JavascriptSettings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

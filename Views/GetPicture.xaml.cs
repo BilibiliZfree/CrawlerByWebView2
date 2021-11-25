@@ -49,6 +49,8 @@ namespace Crawler.Views
             ImageMessage_ListView.ItemsSource = imageCollection;
         }
 
+        #region Click
+
         /// <summary>
         /// 加载网页
         /// </summary>
@@ -57,7 +59,7 @@ namespace Crawler.Views
         private void LoadButton_Click(object sender, RoutedEventArgs e)
         {
             webView.webView.Source = new Uri(_UrlTextBox.Text);
-            
+
         }
 
         /// <summary>
@@ -73,6 +75,45 @@ namespace Crawler.Views
                 AddToCollection(new UrlStruct() { Id = item.Key, IamgeName = "", Link = item.Value, Status = "已获取" });
             }
         }
+
+
+        private void DownloadOne_Click(object sender, RoutedEventArgs e)
+        {
+            if (imageCollection.Count<=0)
+            {
+                MessageBox.Show("下载失败！\n原因：列表中没有图片");
+                return;
+            }
+            int index = ImageMessage_ListView.SelectedIndex;
+            UrlStruct urlStruct = imageCollection[index];
+            DownloadOneImage(urlStruct);
+        }
+
+        private void DownloadAll_Click(object sender, RoutedEventArgs e)
+        {
+            if (imageCollection.Count <= 0)
+            {
+                MessageBox.Show("下载失败！\n原因：列表中没有图片");
+                return;
+            }
+            DownloadAllImage(imageCollection);
+        }
+
+        /// <summary>
+        /// 设定页面
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void JavascriptSetting_Click(object sender, RoutedEventArgs e)
+        {
+            JavascriptSettings otherSettings = new JavascriptSettings();
+            otherSettings.ShowDialog();
+        }
+
+
+        #endregion
+
+
         /// <summary>
         /// 将链接数据添加到列表源里面
         /// </summary>
@@ -135,18 +176,11 @@ namespace Crawler.Views
             }
         }
 
-        private void DownloadOne_Click(object sender, RoutedEventArgs e)
-        {
-            int index = ImageMessage_ListView.SelectedIndex;
-            UrlStruct urlStruct = imageCollection[index];
-            DownloadOneImage(urlStruct);
-        }
-
-        private void DownloadAll_Click(object sender, RoutedEventArgs e)
-        {
-            DownloadAllImage(imageCollection);
-        }
-
+        
+        /// <summary>
+        /// 下载单个图片
+        /// </summary>
+        /// <param name="urlStruct"></param>
         private void DownloadOneImage(UrlStruct urlStruct)
         {
             try
@@ -171,6 +205,10 @@ namespace Crawler.Views
             }
         }
 
+        /// <summary>
+        /// 下载所有图片
+        /// </summary>
+        /// <param name="urls"></param>
         private void DownloadAllImage(ObservableCollection<UrlStruct> urls)
         {
             try
@@ -417,6 +455,7 @@ namespace Crawler.Views
                 this.MessageLabel.Content = content;
             });
         }
+
         #endregion
 
         

@@ -7,50 +7,33 @@ using System.Threading.Tasks;
 
 namespace Crawler.Model
 {
-    /// <summary>
-    /// 属性类
-    /// </summary>
-    public class UrlStruct : INotifyPropertyChanged
+    public class JSCodeStruct : INotifyPropertyChanged
     {
-        private int id;
+        private string id;
         /// <summary>
         /// 编号
         /// </summary>
-        public int Id
+        public string ID
         {
             get { return id; }
-            set
-            {
+            set 
+            { 
                 id = value;
-                RaiseChange("Id");
+                RaiseChange("ID");
             }
         }
 
-        private string link;
+        private string JSCode;
         /// <summary>
-        /// 链接
+        /// JavaScript代码
         /// </summary>
-        public string Link
+        public string JSCODE
         {
-            get { return link; }
-            set
-            {
-                link = value;
-                RaiseChange("Link");
-            }
-        }
-
-        private string iamgeName;
-        /// <summary>
-        /// 图片名
-        /// </summary>
-        public string IamgeName
-        {
-            get { return iamgeName; }
-            set
-            {
-                iamgeName = value;
-                RaiseChange("Title");
+            get { return JSCode; }
+            set 
+            { 
+                JSCode = value;
+                RaiseChange("JSCODE");
             }
         }
 
@@ -61,12 +44,13 @@ namespace Crawler.Model
         public string Status
         {
             get { return status; }
-            set
+            set 
             {
                 status = value;
                 RaiseChange("Status");
             }
         }
+
 
         /// <summary>
         /// 获取属性改变事件
@@ -83,5 +67,7 @@ namespace Crawler.Model
                 PropertyChanged.Invoke(this, new PropertyChangedEventArgs(property));
             }
         }
+
+        
     }
 }
