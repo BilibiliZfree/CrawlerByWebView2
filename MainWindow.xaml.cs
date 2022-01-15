@@ -1,4 +1,5 @@
 ﻿using Crawler.Views;
+using Crawler.DataAccessObject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +29,7 @@ namespace Crawler
         //static readonly double screenWidth = SystemParameters.PrimaryScreenWidth;
 
         GetPicture getPicture = new GetPicture();
+
 
         // ToggleButton定义
         ToggleButton toggleButton = null;
@@ -120,6 +122,10 @@ namespace Crawler
             _Frame.Content = getPicture;
         }
 
-        
+        private void TestButton_Click(object sender, RoutedEventArgs e)
+        {
+            //string databaseLink = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\98546\\Documents\\LocalSql\\Databases\\Crawler.mdf;Integrated Security=True;Connect Timeout=30";
+            
+        }
     }
 }

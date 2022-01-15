@@ -33,7 +33,7 @@ namespace Crawler.Views
         //用于在Setting.init文件中分隔名称和值的字符。
         const char SettingDivider = '$';
 
-        WebView2 webView = new WebView2();
+        WebView2 webView2 = new WebView2();
 
         //锁对象
         object obj = new object();
@@ -42,7 +42,7 @@ namespace Crawler.Views
         public GetPicture()
         {
             InitializeComponent();
-            webView.Show();
+            webView2.Show();
             ReadAttributes();
 
             //控件资源绑定
@@ -58,7 +58,7 @@ namespace Crawler.Views
         /// <param name="e"></param>
         private void LoadButton_Click(object sender, RoutedEventArgs e)
         {
-            webView.webView.Source = new Uri(_UrlTextBox.Text);
+            webView2.webView.Source = new Uri(_UrlTextBox.Text);
 
         }
 
@@ -70,7 +70,7 @@ namespace Crawler.Views
         private void GetImage_Click(object sender, RoutedEventArgs e)
         {
             imageCollection.Clear();
-            foreach (var item in webView.GetWebView2Struct().Result)
+            foreach (var item in webView2.GetWebView2Struct().Result)
             {
                 AddToCollection(new UrlStruct() { Id = item.Key, IamgeName = "", Link = item.Value, Status = "已获取" });
             }
@@ -455,6 +455,7 @@ namespace Crawler.Views
                 this.MessageLabel.Content = content;
             });
         }
+
 
         #endregion
 

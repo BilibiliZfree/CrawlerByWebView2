@@ -5,29 +5,65 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Crawler.Views"
         mc:Ignorable="d"
-        Title="JavascriptSettings" Height="300" Width="500" WindowStyle="SingleBorderWindow">
+        Title="JavascriptSettings" Height="500" Width="500" WindowStyle="SingleBorderWindow">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="4*"/>
-            <RowDefinition Height="1*"/>
+            <RowDefinition Height="6*"/>
+            <RowDefinition Height="13*"/>
+            <RowDefinition Height="3*"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Label Grid.Column="0" Style="{DynamicResource NormalLabelStyle}" Content="自定义JavaScript"
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0" Style="{DynamicResource NormalLabelStyle}" Content="自定义JavaScript"
                    HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5"/>
-            <TextBox Grid.Column="1" Margin="5"/>
+                <TextBox Grid.Column="1" Margin="5"
+                     x:Name="JSCode_TextBox"/>
+            </Grid>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0" Style="{DynamicResource NormalLabelStyle}" Content="JavaScriptCount"
+                   HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5"/>
+                <TextBox Grid.Column="1" Margin="5"
+                     x:Name="JSCount_TextBox"/>
+            </Grid>
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0" Style="{DynamicResource NormalLabelStyle}" Content="JavaScriptCount"
+                   HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5"/>
+                <TextBox Grid.Column="1" Margin="5"
+                     x:Name="AssociatedWebAddress_TextBox"/>
+                <Button Grid.Column="2" Content="获取当前网址" x:Name="GetAssociatedWebAddress_Button"
+                        Style="{DynamicResource NormalButtonStyle}" Click="GetAssociatedWebAddress_Button_Click"/>
+            </Grid>
         </Grid>
         
-        <ListView Grid.Row="1" x:Name="Javascript_ListView">
+        
+        <ListView Grid.Row="1" x:Name="Javascript_ListView" MouseDoubleClick="Javascript_ListView_MouseDoubleClick">
             <ListView.View>
                 <GridView>
+                    <GridViewColumn Header="排序" DisplayMemberBinding="{Binding NO}"/>
                     <GridViewColumn Header="ID" DisplayMemberBinding="{Binding ID}"/>
-                    <GridViewColumn Header="JSCode" DisplayMemberBinding="{Binding JSCODE}" Width="400"/>
-                    <GridViewColumn Header="Status" DisplayMemberBinding="{Binding Status}"/>
+                    <GridViewColumn Header="JS代码" DisplayMemberBinding="{Binding JSCODE}"/>
+                    <GridViewColumn Header="JSCountCode" DisplayMemberBinding="{Binding JSCountCode}"/>
+                    <GridViewColumn Header="模式" DisplayMemberBinding="{Binding Status}"/>
+                    <GridViewColumn Header="关联网址" DisplayMemberBinding="{Binding AssociatedWebAddress}"/>
                 </GridView>
             </ListView.View>
         </ListView>
@@ -39,10 +75,14 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Content="添加" Style="{DynamicResource NormalButtonStyle}"/>
-            <Button Grid.Column="1" Content="停用" Style="{DynamicResource NormalButtonStyle}"/>
-            <Button Grid.Column="2" Content="启用" Style="{DynamicResource NormalButtonStyle}"/>
-            <Button Grid.Column="3" Content="删除" Style="{DynamicResource NormalButtonStyle}"/>
+            <Button Grid.Column="0" Content="添加" Style="{DynamicResource NormalButtonStyle}"
+                    x:Name="InsertCommand_Button" Click="InsertCommand_Button_Click"/>
+            <Button Grid.Column="1" Content="停用/启用" Style="{DynamicResource NormalButtonStyle}"
+                    x:Name="UseOrNot_Button" Click="UseOrNot_Button_Click"/>
+            <Button Grid.Column="2" Content="修改" Style="{DynamicResource NormalButtonStyle}"
+                    x:Name="Update_Button" Click="Update_Button_Click"/>
+            <Button Grid.Column="3" Content="删除" Style="{DynamicResource NormalButtonStyle}"
+                    x:Name="DeleteCommand_Button" Click="DeleteCommand_Button_Click"/>
         </Grid>
     </Grid>
 </Window>

@@ -9,19 +9,36 @@ namespace Crawler.Model
 {
     public class JSCodeStruct : INotifyPropertyChanged
     {
-        private string id;
+
+        private int No;
         /// <summary>
         /// 编号
         /// </summary>
-        public string ID
+        public int NO
+        {
+            get { return No; }
+            set
+            {
+                No = value;
+                RaiseChange("No");
+            }
+        }
+
+        private int id;
+        /// <summary>
+        /// 编号
+        /// </summary>
+        public int ID
         {
             get { return id; }
-            set 
-            { 
+            set
+            {
                 id = value;
                 RaiseChange("ID");
             }
         }
+
+        
 
         private string JSCode;
         /// <summary>
@@ -37,17 +54,45 @@ namespace Crawler.Model
             }
         }
 
-        private string status;
+        private int status;
         /// <summary>
         /// 状态
         /// </summary>
-        public string Status
+        public int Status
         {
             get { return status; }
             set 
             {
                 status = value;
                 RaiseChange("Status");
+            }
+        }
+
+        private string jSCountCode;
+        /// <summary>
+        /// 模式
+        /// </summary>
+        public string JSCountCode
+        {
+            get { return jSCountCode; }
+            set 
+            {
+                jSCountCode = value;
+                RaiseChange("JSCountCode");
+            }
+        }
+
+        private string associatedWebAddress;
+        /// <summary>
+        /// 关联网址
+        /// </summary>
+        public string AssociatedWebAddress
+        {
+            get { return associatedWebAddress; }
+            set 
+            {
+                associatedWebAddress = value;
+                RaiseChange("AssociatedWebAddress");
             }
         }
 

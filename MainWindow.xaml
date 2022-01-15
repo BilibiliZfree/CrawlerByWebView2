@@ -47,6 +47,7 @@
                         <WrapPanel>
                             <ToggleButton x:Name="_GetPictures" Content="爬取网页图片" Style="{DynamicResource WrapButtonStyle}"  Click="GetPictures_Click" Checked="ToggleButton_Checked"/>
                             <ToggleButton x:Name="_GetVideos" Content="爬取网页视频" Style="{DynamicResource WrapButtonStyle}" Checked="ToggleButton_Checked"/>
+                            <ToggleButton x:Name="_TestButton" Content="功能测试" Style="{DynamicResource WrapButtonStyle}" Checked="ToggleButton_Checked" Click="TestButton_Click"/>
                         </WrapPanel>
                     </ScrollViewer>
 
