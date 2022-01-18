@@ -59,7 +59,6 @@ namespace Crawler.Views
             string vs =await webView2.GetWebSiteAsync();
             if (vs != null)
                 AssociatedWebAddress_TextBox.Text = vs.Substring(1,vs.Length-2);
-            
         }
 
         /// <summary>

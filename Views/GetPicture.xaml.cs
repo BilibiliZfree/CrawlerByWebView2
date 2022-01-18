@@ -130,7 +130,18 @@ namespace Crawler.Views
                     return;
                 //不是图片链接便返回
                 if (RegexUtil.IsInvalidImgUrl(urlStruct.Link) == false)
-                    return;
+                {
+                    if (RegexUtil.IsInvalidImgUrl("https:"+urlStruct.Link) == true)
+                    {
+                        urlStruct.Link = "https:"+urlStruct.Link;
+                    }
+                    else
+                    {
+                        Console.WriteLine($"{urlStruct.Link}不是有效图片链接.");
+                        return;
+                    }
+                    
+                }
                 urlStruct.IamgeName = GetImageName(urlStruct.Link);
                 //如果是图片则调度imageCollection动态数据集合添加方法
                 Dispatcher.Invoke(() => {
